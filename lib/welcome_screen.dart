@@ -9,11 +9,14 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Welcome'),
+        title: const Text('Gear Studio Info Tracker',
+            style: TextStyle(color: Colors.white)),
+        backgroundColor: const Color(0xFF9D2C13),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'Hello, $username!',
@@ -23,14 +26,83 @@ class WelcomeScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20.0),
-            ElevatedButton(
-              onPressed: () {
-                // Add logic to navigate to the main app or perform other actions
-              },
-              child: const Text('Continue'),
+            const Text(
+              'Creative Digital Learning Center Rules & Regulations',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 10.0),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildRule('Please take the shoes off when you come in.'),
+                _buildRule('Please do not bring any food or drink inside.'),
+                _buildRule(
+                    'Maintain a quiet environment to avoid disturbing others.'),
+                _buildRule(
+                    'Respect the privacy of others\' data and information stored on the computers. Log out properly after use.'),
+                _buildRule(
+                    'Treat the equipment with care. Report any malfunctions or damage immediately.'),
+              ],
             ),
           ],
         ),
+      ),
+      floatingActionButton: Container(
+        decoration: BoxDecoration(
+          color: const Color(0xFF9D2C13),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => WelcomeScreen(username: username),
+                  ),
+                );
+              },
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              child: const Icon(Icons.calendar_today, color: Colors.white),
+            ),
+            FloatingActionButton(
+              onPressed: () {
+                // Add logic for room icon
+              },
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              child: const Icon(Icons.apartment, color: Colors.white),
+            ),
+            FloatingActionButton(
+              onPressed: () {
+                // Add logic for information icon
+              },
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              child: const Icon(Icons.info, color: Colors.white),
+            ),
+          ],
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+    );
+  }
+
+  Widget _buildRule(String rule) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text('• ', style: TextStyle(fontSize: 18.0)),
+          Expanded(child: Text(rule)),
+        ],
       ),
     );
   }

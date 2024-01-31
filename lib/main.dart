@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'welcome_screen.dart'; 
+import 'welcome_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -49,10 +49,10 @@ class _StartScreenState extends State<StartScreen> {
         title: const Text(
           'Gear Studio Info Tracker',
           style: TextStyle(
-            color: Colors.white, 
+            color: Colors.white,
           ),
         ),
-        backgroundColor: const Color(0xFF9D2C13), 
+        backgroundColor: const Color(0xFF9D2C13),
       ),
       body: Container(
         padding: const EdgeInsets.all(20.0),
@@ -60,9 +60,9 @@ class _StartScreenState extends State<StartScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Image.asset(
-              'kku_logo.png', 
-              height: 300, 
-              width: 300, 
+              'kku_logo.png',
+              height: 300,
+              width: 300,
             ),
             const SizedBox(height: 20.0),
             TextField(
@@ -94,8 +94,7 @@ class _StartScreenState extends State<StartScreen> {
               onPressed: _login,
               child: const Text(
                 'Login',
-                style: TextStyle(
-                    color: Colors.black),
+                style: TextStyle(color: Colors.black),
               ),
             ),
           ],
