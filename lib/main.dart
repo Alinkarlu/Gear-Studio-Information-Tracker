@@ -60,7 +60,7 @@ class _StartScreenState extends State<StartScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Image.asset(
-              'kku_logo.png',
+              'assets/kku_logo.png',
               height: 300,
               width: 300,
             ),
