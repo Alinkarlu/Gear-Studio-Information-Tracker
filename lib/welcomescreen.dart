@@ -1,9 +1,28 @@
 import 'package:flutter/material.dart';
+import 'room_schedule.dart';
 
 class WelcomeScreen extends StatelessWidget {
   final String username;
 
   const WelcomeScreen({Key? key, required this.username}) : super(key: key);
+
+  void _navigateBack(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => WelcomeScreen(username: username),
+      ),
+    );
+  }
+
+  void _navigateToRoomSchedule(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => RoomSchedule(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,12 +79,15 @@ class WelcomeScreen extends StatelessWidget {
           children: [
             FloatingActionButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => WelcomeScreen(username: username),
-                  ),
-                );
+                _navigateBack(context);
+              },
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              child: const Icon(Icons.home, color: Colors.white),
+            ),
+            FloatingActionButton(
+              onPressed: () {
+                _navigateToRoomSchedule(context);
               },
               backgroundColor: Colors.transparent,
               elevation: 0,

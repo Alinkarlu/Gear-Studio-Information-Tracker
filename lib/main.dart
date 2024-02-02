@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'welcome_screen.dart';
+import 'welcomescreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,7 +24,9 @@ class StartScreen extends StatefulWidget {
   const StartScreen({Key? key}) : super(key: key);
 
   @override
-  _StartScreenState createState() => _StartScreenState();
+  _StartScreenState createState() {
+    return _StartScreenState();
+  }
 }
 
 class _StartScreenState extends State<StartScreen> {
@@ -61,8 +63,8 @@ class _StartScreenState extends State<StartScreen> {
           children: <Widget>[
             Image.asset(
               'assets/kku_logo.png',
-              height: 300,
-              width: 300,
+              height: 150,
+              width: 150,
             ),
             const SizedBox(height: 20.0),
             TextField(
