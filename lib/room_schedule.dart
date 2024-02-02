@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'welcomescreen.dart';
 
 class RoomSchedule extends StatefulWidget {
-  const RoomSchedule({Key? key}) : super(key: key);
+  final String username;
+
+  const RoomSchedule({Key? key, required this.username}) : super(key: key);
 
   @override
   _RoomScheduleState createState() => _RoomScheduleState();
@@ -68,79 +69,75 @@ class _RoomScheduleState extends State<RoomSchedule> {
     },
   ];
 
-
- void _navigateToWelcomeScreen(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const WelcomeScreen(username: "Dummy"),
-      ),
-    );
+  void _navigateBack(BuildContext context) {
+    Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gear Studio Info Tracker',
-            style: TextStyle(color: Colors.white)),
+        title:
+            const Text('Room Schedule', style: TextStyle(color: Colors.white)),
         backgroundColor: const Color(0xFF9D2C13),
       ),
-      body: ListView.builder(
-        itemCount: roomSchedule.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(
-                '${roomSchedule[index]['day']} - ${roomSchedule[index]['time']}'),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Subject Code: ${roomSchedule[index]['subjectCode']}'),
-                Text('Subject Name: ${roomSchedule[index]['subjectName']}'),
-                Text('Lecturer: ${roomSchedule[index]['lecturer']}'),
-              ],
-            ),
-          );
-        },
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: const Color(0xFF9D2C13),
-        shape: const CircularNotchedRectangle(),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            FloatingActionButton(
-              onPressed: () {
-                _navigateToWelcomeScreen(context);
-              },
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              child: const Icon(Icons.home, color: Colors.white),
+            const Text(
+              'Rooms Schedule:',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            FloatingActionButton(
-              onPressed: () {
-                // No need to navigate to RoomSchedule here
-              },
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              child: const Icon(Icons.calendar_today, color: Colors.white),
+            const SizedBox(height: 10.0),
+            Expanded(
+              child: ListView.builder(
+                itemCount: roomSchedule.length,
+                itemBuilder: (context, index) {
+                  return _buildScheduleItem(roomSchedule[index]);
+                },
+              ),
             ),
-            FloatingActionButton(
-              onPressed: () {
-                // Add logic for apartment icon
-              },
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              child: const Icon(Icons.apartment, color: Colors.white),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _navigateBack(context);
+        },
+        child: const Icon(Icons.home),
+      ),
+    );
+  }
+
+  Widget _buildScheduleItem(Map<String, dynamic> scheduleItem) {
+    return Card(
+      elevation: 5.0,
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Day: ${scheduleItem['day']}',
+              style: const TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            FloatingActionButton(
-              onPressed: () {
-                // Add logic for information icon
-              },
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              child: const Icon(Icons.info, color: Colors.white),
-            ),
+            const SizedBox(height: 8.0),
+            Text('Time: ${scheduleItem['time']}'),
+            const SizedBox(height: 8.0),
+            Text('Subject Code: ${scheduleItem['subjectCode']}'),
+            const SizedBox(height: 8.0),
+            Text('Subject Name: ${scheduleItem['subjectName']}'),
+            const SizedBox(height: 8.0),
+            Text('Lecturer: ${scheduleItem['lecturer']}'),
           ],
         ),
       ),

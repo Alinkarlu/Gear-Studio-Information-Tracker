@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'welcomescreen.dart';
 import 'room_schedule.dart';
-import 'information.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class InformationPage extends StatelessWidget {
   final String username;
 
-  const WelcomeScreen({Key? key, required this.username}) : super(key: key);
+  const InformationPage({Key? key, required this.username}) : super(key: key);
 
   void _navigateToRoomSchedule(BuildContext context) {
     Navigator.push(
@@ -39,7 +39,7 @@ class WelcomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Gear Studio Info Tracker',
+          'Gear Studio Information',
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: const Color(0xFF9D2C13),
@@ -49,35 +49,49 @@ class WelcomeScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Hello, $username!',
-              style: const TextStyle(
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 20.0),
             const Text(
-              'Creative Digital Learning Center Rules & Regulations',
+              'Location Map:',
               style: TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 10.0),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildRule('Please take the shoes off when you come in.'),
-                _buildRule('Please do not bring any food or drink inside.'),
-                _buildRule(
-                    'Maintain a quiet environment to avoid disturbing others.'),
-                _buildRule(
-                    'Respect the privacy of others\' data and information stored on the computers. Log out properly after use.'),
-                _buildRule(
-                    'Treat the equipment with care. Report any malfunctions or damage immediately.'),
-              ],
+            InkWell(
+              onTap: () {
+                // Open the location map link when tapped
+                // You can use the url_launcher package for this purpose
+              },
+              child: const Text(
+                'https://maps.app.goo.gl/VNARieJvW6rXgJaR8',
+                style: TextStyle(
+                  color: Colors.blue,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
             ),
+            const SizedBox(height: 20.0),
+            const Text(
+              'Opening Hours:',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 10.0),
+            const Text('Weekdays: 09:00 - 16:00'),
+            const Text('Weekends & Holidays: Closed'),
+            const SizedBox(height: 20.0),
+            const Text(
+              'Contact Information:',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 10.0),
+            const Text('Email: info@gearstudio.com'),
+            const Text('Phone: +1 (123) 456-7890'),
           ],
         ),
       ),
@@ -107,7 +121,7 @@ class WelcomeScreen extends StatelessWidget {
             ),
             FloatingActionButton(
               onPressed: () {
-                _navigateToRoomSchedule(context);
+                //
               },
               backgroundColor: Colors.transparent,
               elevation: 0,
@@ -115,6 +129,7 @@ class WelcomeScreen extends StatelessWidget {
             ),
             FloatingActionButton(
               onPressed: () {
+                // Navigate back to the previous screen
                 _navigateToInformationPage(context);
               },
               backgroundColor: Colors.transparent,
@@ -125,19 +140,6 @@ class WelcomeScreen extends StatelessWidget {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-    );
-  }
-
-  Widget _buildRule(String rule) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text('• ', style: TextStyle(fontSize: 18.0)),
-          Expanded(child: Text(rule)),
-        ],
-      ),
     );
   }
 }
