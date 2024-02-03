@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'welcomescreen.dart';
 import 'room_schedule.dart';
+import 'information_rooms.dart';
 
 class InformationPage extends StatelessWidget {
   final String username;
@@ -25,14 +26,15 @@ class InformationPage extends StatelessWidget {
     );
   }
 
-  void _navigateToInformationPage(BuildContext context) {
+  void _navigateToInformationRooms(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => InformationPage(username: username),
+        builder: (context) => InformationRooms(username: username),
       ),
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +123,7 @@ class InformationPage extends StatelessWidget {
             ),
             FloatingActionButton(
               onPressed: () {
-                //
+                _navigateToInformationRooms(context);
               },
               backgroundColor: Colors.transparent,
               elevation: 0,
@@ -129,8 +131,7 @@ class InformationPage extends StatelessWidget {
             ),
             FloatingActionButton(
               onPressed: () {
-                // Navigate back to the previous screen
-                _navigateToInformationPage(context);
+                // Do nothing or add your functionality
               },
               backgroundColor: Colors.transparent,
               elevation: 0,

@@ -1,118 +1,152 @@
 import 'package:flutter/material.dart';
+import 'welcomescreen.dart';
+import 'information.dart';
+import 'room_schedule.dart';
 
-void main() {
-  runApp(MyApp());
-}
+class InformationRooms extends StatelessWidget {
+  final String username;
 
-class MyApp extends StatelessWidget {
+  const InformationRooms({Key? key, required this.username}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      // Define routes
-      routes: {
-        '/': (context) => MainClassroom(),
-        '/macClassroomInfo': (context) => MacClassroomInformation(),
-      },
-      initialRoute: '/',
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Gear Studio Info Tracker',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: const Color(0xFF9D2C13),
+      ),
+      body: const Padding(
+        padding: EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Rooms Information',
+              style: TextStyle(
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 20.0),
+            Text(
+              'You can explore information of the rooms in Gear Studio here.',
+              style: TextStyle(fontSize: 18.0),
+            ),
+            SizedBox(height: 20.0),
+            MainClassroom(),
+          ],
+        ),
+      ),
+      floatingActionButton: Container(
+        decoration: BoxDecoration(
+          color: const Color(0xFF9D2C13),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => WelcomeScreen(username: username),
+                  ),
+                );
+              },
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              child: const Icon(Icons.home, color: Colors.white),
+            ),
+            FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RoomSchedule(username: username),
+                  ),
+                );
+              },
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              child: const Icon(Icons.calendar_today, color: Colors.white),
+            ),
+            FloatingActionButton(
+              onPressed: () {
+                // Add functionality for the rooms icon
+              },
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              child: const Icon(Icons.apartment, color: Colors.white),
+            ),
+            FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => InformationPage(username: username),
+                  ),
+                );
+              },
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              child: const Icon(Icons.info, color: Colors.white),
+            ),
+          ],
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
 
 class MainClassroom extends StatelessWidget {
+  const MainClassroom({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Gear Studio Info Tracker',
-          style: TextStyle(
-            color: Colors.white,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GestureDetector(
+          onTap: () {
+            _navigateToClassroomInfo(context, 'Mac Classroom');
+          },
+          child: buildClassroomWidget(
+            'Mac Classroom',
+            'images/macroom.jpg',
           ),
         ),
-        backgroundColor: Color.fromRGBO(157, 44, 19, 1),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, '/macClassroomInfo');
-              },
-              child:
-                  buildClassroomWidget('Mac Classroom', 'images/macroom.jpg'),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, '/macClassroomInfo');
-              },
-              child: buildClassroomWidget(
-                  'Smart Classroom', 'images/smartroom.jpg'),
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: Color.fromRGBO(157, 44, 19, 1),
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  // Add your code for calendar icon
-                },
-                child: Icon(
-                  Icons.calendar_today,
-                  size: 30,
-                  color: Colors.white,
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  // Add your code for notebook icon
-                },
-                child: Icon(
-                  Icons.book,
-                  size: 30,
-                  color: Colors.white,
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  // Add your code for chat icon
-                },
-                child: Icon(
-                  Icons.chat,
-                  size: 30,
-                  color: Colors.white,
-                ),
-              ),
-            ],
+        GestureDetector(
+          onTap: () {
+            _navigateToClassroomInfo(context, 'Smart Classroom');
+          },
+          child: buildClassroomWidget(
+            'Smart Classroom',
+            'images/smartroom.jpg',
           ),
         ),
-      ),
+      ],
     );
   }
 
   Widget buildClassroomWidget(String title, String imagePath) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 18, horizontal: 18),
+      padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 18),
       child: Center(
         child: Column(
           children: [
             Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.asset(
@@ -129,52 +163,40 @@ class MainClassroom extends StatelessWidget {
   }
 }
 
-class MacClassroomInformation extends StatelessWidget {
+class ClassroomInformation extends StatelessWidget {
+  final String title;
+  final List<Widget> informationSections;
+  final List<Widget>? additionalWidgets;
+
+  const ClassroomInformation({
+    Key? key,
+    required this.title,
+    required this.informationSections,
+    this.additionalWidgets,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Gear Studio Info Tracker',
           style: TextStyle(
             color: Colors.white,
           ),
         ),
-        backgroundColor: Color.fromRGBO(157, 44, 19, 1),
+        backgroundColor: const Color(0xFF9D2C13),
         centerTitle: true,
       ),
       body: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SectionTitle('Information about Mac Classroom'),
-            SubSectionTitle('IMac User Guide'),
-            InstructionStep('1. Turn on Mac.'),
-            InstructionStep('2. Turn on Magic Keyboard and Magic Mouse.'),
-            InstructionStep(
-              '3. Choose the account that corresponds your device number.',
-            ),
-            InstructionStep(
-              '4. You will see the password when you click the hint button.',
-            ),
-            SubSectionTitle('Remarks: Extension Sockets'),
-            Remark(
-              'If you require extension, please kindly reach out to our team at the information counter.',
-            ),
-            Remark(
-              'Before Taking the Extension Sockets, please remove the black strap and place it on the counter.',
-            ),
+            SectionTitle('Information about $title'),
+            ...informationSections,
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color.fromRGBO(157, 44, 19, 1),
-        items: [
-          buildBottomNavigationBarItem(Icons.calendar_today),
-          buildBottomNavigationBarItem(Icons.book),
-          buildBottomNavigationBarItem(Icons.chat),
-        ],
       ),
     );
   }
@@ -184,9 +206,59 @@ class MacClassroomInformation extends StatelessWidget {
       icon: Icon(
         icon,
         size: 30,
-        color: Colors.white,
+        color: const Color(0xFF9D2C13),
       ),
       label: '',
+    );
+  }
+}
+
+class SmartClassroomInformation extends StatelessWidget {
+  const SmartClassroomInformation({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const ClassroomInformation(
+      title: 'Smart Classroom',
+      informationSections: [
+        SubSectionTitle('Smart Devices Usage'),
+        InstructionStep('1. Use the touchscreen panel to control devices.'),
+        InstructionStep(
+            '2. Connect your device via Bluetooth for presentations.'),
+        InstructionStep(
+            '3. In case of technical issues, contact our support team.'),
+        SubSectionTitle('Remarks: Maintenance'),
+        Remark(
+          'If you notice any issues with the equipment, please report it to the information counter.',
+        ),
+      ],
+    );
+  }
+}
+
+class MacClassroomInformation extends StatelessWidget {
+  const MacClassroomInformation({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const ClassroomInformation(
+      title: 'Mac Classroom',
+      informationSections: [
+        SubSectionTitle('IMac User Guide'),
+        InstructionStep('1. Turn on Mac.'),
+        InstructionStep('2. Turn on Magic Keyboard and Magic Mouse.'),
+        InstructionStep(
+            '3. Choose the account that corresponds to your device number.'),
+        InstructionStep(
+            '4. You will see the password when you click the hint button.'),
+        SubSectionTitle('Remarks: Extension Sockets'),
+        Remark(
+          'If you require an extension, please kindly reach out to our team at the information counter.',
+        ),
+        Remark(
+          'Before taking the Extension Sockets, please remove the black strap and place it on the counter.',
+        ),
+      ],
     );
   }
 }
@@ -194,15 +266,15 @@ class MacClassroomInformation extends StatelessWidget {
 class SectionTitle extends StatelessWidget {
   final String title;
 
-  SectionTitle(this.title);
+  const SectionTitle(this.title, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 16, left: 10),
+      padding: const EdgeInsets.only(top: 16, left: 10),
       child: Text(
         title,
-        style: TextStyle(
+        style: const TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 20,
         ),
@@ -214,15 +286,15 @@ class SectionTitle extends StatelessWidget {
 class SubSectionTitle extends StatelessWidget {
   final String title;
 
-  SubSectionTitle(this.title);
+  const SubSectionTitle(this.title, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 18),
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 18),
       child: Text(
         title,
-        style: TextStyle(
+        style: const TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 18,
         ),
@@ -234,15 +306,15 @@ class SubSectionTitle extends StatelessWidget {
 class InstructionStep extends StatelessWidget {
   final String text;
 
-  InstructionStep(this.text);
+  const InstructionStep(this.text, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 18),
+      padding: const EdgeInsets.symmetric(horizontal: 18),
       child: Text(
         text,
-        style: TextStyle(fontSize: 18),
+        style: const TextStyle(fontSize: 18),
       ),
     );
   }
@@ -251,15 +323,34 @@ class InstructionStep extends StatelessWidget {
 class Remark extends StatelessWidget {
   final String text;
 
-  Remark(this.text);
+  const Remark(this.text, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 18),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 18),
       child: Text(
         text,
-        style: TextStyle(fontSize: 18),
+        style: const TextStyle(fontSize: 18),
+      ),
+    );
+  }
+}
+
+// Utility function for navigation
+void _navigateToClassroomInfo(BuildContext context, String title) {
+  if (title == 'Mac Classroom') {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const MacClassroomInformation(),
+      ),
+    );
+  } else if (title == 'Smart Classroom') {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SmartClassroomInformation(),
       ),
     );
   }
