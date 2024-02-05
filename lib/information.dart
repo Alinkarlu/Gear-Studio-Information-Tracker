@@ -41,7 +41,7 @@ class InformationPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Gear Studio Information',
+          'Contact Information',
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: const Color(0xFF9D2C13),

@@ -40,7 +40,7 @@ class WelcomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Gear Studio Info Tracker',
+          'Home',
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: const Color(0xFF9D2C13),
