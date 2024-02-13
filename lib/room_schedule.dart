@@ -1,5 +1,16 @@
 import 'package:flutter/material.dart';
 
+class TimetableEntry {
+  final String day;
+  final String time;
+  final String courseName;
+  final String subjectCode;
+  final String instructor;
+
+  TimetableEntry(
+      this.day, this.time, this.courseName, this.subjectCode, this.instructor);
+}
+
 class RoomSchedule extends StatefulWidget {
   final String username;
 
@@ -10,63 +21,63 @@ class RoomSchedule extends StatefulWidget {
 }
 
 class _RoomScheduleState extends State<RoomSchedule> {
-  List<Map<String, dynamic>> roomSchedule = [
-    {
-      'day': 'Monday',
-      'time': '9:00 - 12:00',
-      'subjectCode': 'EN843303',
-      'subjectName': 'Multimedia Database',
-      'lecturer': 'Asst. Prof. JIRADEJ PONSAWAT',
-    },
-    {
-      'day': 'Tuesday',
-      'time': '9:00 - 12:00',
-      'subjectCode': 'EN843302',
-      'subjectName': 'Advanced Data Structures',
-      'lecturer': 'Lecturer SARUN PAISARNSRISOMSUK',
-    },
-    {
-      'day': 'Wednesday',
-      'time': '14:00 - 17:00',
-      'subjectCode': '049006',
-      'subjectName': 'Japanese for Communication',
-      'lecturer': 'Lecturer RUTCHANEE PIYATHAMRONGCHAI',
-    },
-    {
-      'day': 'Thursday',
-      'time': '9:00 - 12:00',
-      'subjectCode': 'EN16201-M',
-      'subjectName': 'Virtual Reality',
-      'lecturer': 'Prof. JOHN DOE',
-    },
-    {
-      'day': 'Thursday',
-      'time': '13:00 - 16:00',
-      'subjectCode': 'EN04309',
-      'subjectName': 'Software Engineering',
-      'lecturer': 'Lecturer SARUN PAISARNSRISOMSUK',
-    },
-    {
-      'day': 'Thursday',
-      'time': '14:30 - 17:30',
-      'subjectCode': 'EN18303',
-      'subjectName': 'Artificial Intelligence',
-      'lecturer': 'Lecturer THANATAT CHITPIPAT',
-    },
-    {
-      'day': 'Thursday',
-      'time': '16:30 - 19:30',
-      'subjectCode': 'EN18320',
-      'subjectName': 'Machine Learning',
-      'lecturer': 'Assoc. Prof. KANDA SAIKAEW',
-    },
-    {
-      'day': 'Thursday',
-      'time': '9:00 - 12:00',
-      'subjectCode': 'EN04210',
-      'subjectName': 'Mobile Application Development',
-      'lecturer': 'Prof. JANE DOE',
-    },
+  List<TimetableEntry> roomSchedule = [
+    TimetableEntry(
+      'Monday',
+      '9:00 - 12:00',
+      'Multimedia Database',
+      'EN843303',
+      'Asst. Prof. JIRADEJ PONSAWAT',
+    ),
+    TimetableEntry(
+      'Tuesday',
+      '9:00 - 12:00',
+      'Advanced Data Structures',
+      'EN843302',
+      'Lecturer SARUN PAISARNSRISOMSUK',
+    ),
+    TimetableEntry(
+      'Wednesday',
+      '14:00 - 17:00',
+      'Japanese for Communication',
+      '049006',
+      'Lecturer RUTCHANEE PIYATHAMRONGCHAI',
+    ),
+    TimetableEntry(
+      'Thursday',
+      '9:00 - 12:00',
+      'Virtual Reality',
+      'EN16201-M',
+      'Prof. JOHN DOE',
+    ),
+    TimetableEntry(
+      'Thursday',
+      '13:00 - 16:00',
+      'Software Engineering',
+      'EN04309',
+      'Lecturer SARUN PAISARNSRISOMSUK',
+    ),
+    TimetableEntry(
+      'Thursday',
+      '14:30 - 17:30',
+      'Artificial Intelligence',
+      'EN18303',
+      'Lecturer THANATAT CHITPIPAT',
+    ),
+    TimetableEntry(
+      'Thursday',
+      '16:30 - 19:30',
+      'Machine Learning',
+      'EN18320',
+      'Assoc. Prof. KANDA SAIKAEW',
+    ),
+    TimetableEntry(
+      'Thursday',
+      '9:00 - 12:00',
+      'Mobile Application Development',
+      'EN04210',
+      'Prof. JANE DOE',
+    ),
   ];
 
   void _navigateBack(BuildContext context) {
@@ -87,20 +98,124 @@ class _RoomScheduleState extends State<RoomSchedule> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Rooms Schedule:',
+              'Room Schedule:',
               style: TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
+                color: Color(0xFF9D2C13),
               ),
             ),
             const SizedBox(height: 10.0),
-            Expanded(
-              child: ListView.builder(
-                itemCount: roomSchedule.length,
-                itemBuilder: (context, index) {
-                  return _buildScheduleItem(roomSchedule[index]);
-                },
-              ),
+            Table(
+              defaultColumnWidth: const IntrinsicColumnWidth(),
+              border: TableBorder.all(color: Colors.black),
+              children: [
+                const TableRow(
+                  children: [
+                    TableCell(
+                      child: Center(
+                        child: Text(
+                          'Day',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    TableCell(
+                      child: Center(
+                        child: Text(
+                          'Time',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    TableCell(
+                      child: Center(
+                        child: Text(
+                          'Course Name',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    TableCell(
+                      child: Center(
+                        child: Text(
+                          'Subject Code',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    TableCell(
+                      child: Center(
+                        child: Text(
+                          'Instructor',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                ...roomSchedule.map((entry) {
+                  return TableRow(
+                    children: [
+                      TableCell(
+                        child: Center(
+                          child: Container(
+                            padding: const EdgeInsets.all(8.0),
+                            color: Colors.white,
+                            child: Text(entry.day),
+                          ),
+                        ),
+                      ),
+                      TableCell(
+                        child: Center(
+                          child: Container(
+                            padding: const EdgeInsets.all(8.0),
+                            color: Colors.white,
+                            child: Text(entry.time),
+                          ),
+                        ),
+                      ),
+                      TableCell(
+                        child: Center(
+                          child: Container(
+                            padding: const EdgeInsets.all(8.0),
+                            color: Colors.white,
+                            child: Text(entry.courseName),
+                          ),
+                        ),
+                      ),
+                      TableCell(
+                        child: Center(
+                          child: Container(
+                            padding: const EdgeInsets.all(8.0),
+                            color: Colors.white,
+                            child: Text(entry.subjectCode),
+                          ),
+                        ),
+                      ),
+                      TableCell(
+                        child: Center(
+                          child: Container(
+                            padding: const EdgeInsets.all(8.0),
+                            color: Colors.white,
+                            child: Text(entry.instructor),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                }).toList(),
+              ],
             ),
           ],
         ),
@@ -109,37 +224,8 @@ class _RoomScheduleState extends State<RoomSchedule> {
         onPressed: () {
           _navigateBack(context);
         },
+        backgroundColor: const Color(0xFF9D2C13),
         child: const Icon(Icons.home),
-      ),
-    );
-  }
-
-  Widget _buildScheduleItem(Map<String, dynamic> scheduleItem) {
-    return Card(
-      elevation: 5.0,
-      margin: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Day: ${scheduleItem['day']}',
-              style: const TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8.0),
-            Text('Time: ${scheduleItem['time']}'),
-            const SizedBox(height: 8.0),
-            Text('Subject Code: ${scheduleItem['subjectCode']}'),
-            const SizedBox(height: 8.0),
-            Text('Subject Name: ${scheduleItem['subjectName']}'),
-            const SizedBox(height: 8.0),
-            Text('Lecturer: ${scheduleItem['lecturer']}'),
-          ],
-        ),
       ),
     );
   }
