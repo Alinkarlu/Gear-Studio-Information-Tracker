@@ -23,16 +23,10 @@ class InformationRooms extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Rooms Information',
-              style: TextStyle(
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            SectionTitle('Rooms Information'),
             SizedBox(height: 20.0),
             Text(
-              'You can explore information of the rooms in Gear Studio here.',
+              'You can explore information about the rooms in Gear Studio here.',
               style: TextStyle(fontSize: 18.0),
             ),
             SizedBox(height: 20.0),
@@ -49,6 +43,7 @@ class InformationRooms extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             FloatingActionButton(
+              heroTag: 'home_button', // Unique tag
               onPressed: () {
                 Navigator.push(
                   context,
@@ -62,6 +57,7 @@ class InformationRooms extends StatelessWidget {
               child: const Icon(Icons.home, color: Colors.white),
             ),
             FloatingActionButton(
+              heroTag: 'calendar_button', // Unique tag
               onPressed: () {
                 Navigator.push(
                   context,
@@ -75,6 +71,7 @@ class InformationRooms extends StatelessWidget {
               child: const Icon(Icons.calendar_today, color: Colors.white),
             ),
             FloatingActionButton(
+              heroTag: 'rooms_button', // Unique tag
               onPressed: () {
                 // Add functionality for the rooms icon
               },
@@ -83,6 +80,7 @@ class InformationRooms extends StatelessWidget {
               child: const Icon(Icons.apartment, color: Colors.white),
             ),
             FloatingActionButton(
+              heroTag: 'info_button', // Unique tag
               onPressed: () {
                 Navigator.push(
                   context,
@@ -147,14 +145,34 @@ class MainClassroom extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.asset(
-                imagePath,
-                width: 400,
-                height: 160,
-                fit: BoxFit.cover,
-              ),
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.asset(
+                    imagePath,
+                    width: 400,
+                    height: 160,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Positioned(
+                  bottom: 8,
+                  right: 8,
+                  child: Container(
+                    padding: const EdgeInsets.all(6),
+                    color: Colors.black54,
+                    child: const Text(
+                      'Tap for details',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -271,7 +289,7 @@ class SectionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 16, left: 10),
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 18),
       child: Text(
         title,
         style: const TextStyle(

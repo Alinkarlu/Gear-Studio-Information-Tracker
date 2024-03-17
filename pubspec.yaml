@@ -64,6 +64,7 @@ flutter:
     - assets/kku_logo.png
     - images/macroom.jpg
     - images/smartroom.jpg
+    - assets/map.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
