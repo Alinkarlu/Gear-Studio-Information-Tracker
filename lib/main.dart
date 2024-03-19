@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'welcomescreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+//import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 
-void main() {
+void main() async {
   runApp(const MyApp());
 }
 
@@ -11,6 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Gear Studio Info Tracker',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -24,9 +28,7 @@ class StartScreen extends StatefulWidget {
   const StartScreen({Key? key}) : super(key: key);
 
   @override
-  _StartScreenState createState() {
-    return _StartScreenState();
-  }
+  _StartScreenState createState() => _StartScreenState();
 }
 
 class _StartScreenState extends State<StartScreen> {
@@ -35,11 +37,56 @@ class _StartScreenState extends State<StartScreen> {
 
   bool _obscureText = true;
 
-  void _login() {
+  void _login() async {
+    String email = _usernameController.text.trim();
+    String password = _passwordController.text.trim();
+
+    if (email.isEmpty || password.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Login Failed'),
+            content: const Text('Please enter email and password.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+
+    if (!email.contains('@kkumail')) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Login Failed'),
+            content: const Text('Please enter a valid KKU email.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => WelcomeScreen(username: _usernameController.text),
+        builder: (context) => WelcomeScreen(username: email),
       ),
     );
   }
@@ -70,7 +117,7 @@ class _StartScreenState extends State<StartScreen> {
             TextField(
               controller: _usernameController,
               decoration: const InputDecoration(
-                labelText: 'Username',
+                labelText: 'Email',
               ),
             ),
             const SizedBox(height: 20.0),
@@ -91,17 +138,65 @@ class _StartScreenState extends State<StartScreen> {
               ),
               obscureText: _obscureText,
             ),
-            const SizedBox(height: 20.0),
+            const SizedBox(height: 10.0),
             ElevatedButton(
-              onPressed: _login,
+              onPressed: () {
+                _login();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF9D2C13),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
               child: const Text(
                 'Login',
-                style: TextStyle(color: Colors.black),
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              '------------------------------ OR ------------------------------',
+              style: TextStyle(color: Colors.black),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton.icon(
+              onPressed: () {
+                signInWithGoogle();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF9D2C13),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                minimumSize: const Size(120, 40),
+              ),
+              icon: const Icon(
+                Icons.email,
+                color: Colors.white,
+              ),
+              label: const Text(
+                'KKU EMAIL',
+                style: TextStyle(color: Colors.white),
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void signInWithGoogle() async {
+    GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+    AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+    print(userCredential.user?.displayName);
   }
 }
