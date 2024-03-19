@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'welcomescreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-//import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 void main() async {
   runApp(const MyApp());
@@ -34,10 +34,11 @@ class StartScreen extends StatefulWidget {
 class _StartScreenState extends State<StartScreen> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   bool _obscureText = true;
 
-  void _login() async {
+  void _login(BuildContext context) async {
     String email = _usernameController.text.trim();
     String password = _passwordController.text.trim();
 
@@ -91,6 +92,45 @@ class _StartScreenState extends State<StartScreen> {
     );
   }
 
+  void signInWithGoogle(BuildContext context) async {
+    try {
+      if (kIsWeb) {
+        GoogleAuthProvider googleProvider = GoogleAuthProvider();
+
+        googleProvider
+            .addScope('https://www.googleapis.com/auth/contacts.readonly');
+
+        await FirebaseAuth.instance.signInWithPopup(googleProvider);
+      } else {
+        GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
+
+        final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+
+        if (googleUser != null) {
+          final GoogleSignInAuthentication googleAuth =
+              await googleUser.authentication;
+
+          final credential = GoogleAuthProvider.credential(
+            accessToken: googleAuth.accessToken,
+            idToken: googleAuth.idToken,
+          );
+
+          await FirebaseAuth.instance.signInWithCredential(credential);
+        }
+      }
+    } on FirebaseAuthException catch (e) {
+      showSnackBar(context, e.message!);
+    }
+  }
+
+  void showSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,11 +180,17 @@ class _StartScreenState extends State<StartScreen> {
             ),
             const SizedBox(height: 10.0),
             ElevatedButton(
+<<<<<<< Updated upstream
               onPressed: () {
-                _login();
+                _login(context);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF9D2C13),
+=======
+              onPressed: _login,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF9D2C13),
+>>>>>>> Stashed changes
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -161,9 +207,13 @@ class _StartScreenState extends State<StartScreen> {
             ),
             const SizedBox(height: 10),
             ElevatedButton.icon(
+<<<<<<< Updated upstream
               onPressed: () {
-                signInWithGoogle();
+                signInWithGoogle(context);
               },
+=======
+              onPressed: _login,
+>>>>>>> Stashed changes
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF9D2C13),
                 shape: RoundedRectangleBorder(
@@ -184,19 +234,5 @@ class _StartScreenState extends State<StartScreen> {
         ),
       ),
     );
-  }
-
-  void signInWithGoogle() async {
-    GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
-
-    AuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-
-    UserCredential userCredential =
-        await FirebaseAuth.instance.signInWithCredential(credential);
-    print(userCredential.user?.displayName);
   }
 }
