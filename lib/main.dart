@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'welcomescreen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 
-void main() async {
-  runApp(const MyApp());
+void main() {
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,22 +14,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const StartScreen(),
+      home: StartScreen(),
     );
   }
 }
 
 class StartScreen extends StatefulWidget {
-  const StartScreen({Key? key}) : super(key: key);
-
   @override
   _StartScreenState createState() => _StartScreenState();
 }
 
 class _StartScreenState extends State<StartScreen> {
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   bool _obscureText = true;
 
@@ -47,14 +39,14 @@ class _StartScreenState extends State<StartScreen> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Login Failed'),
-            content: const Text('Please enter email and password.'),
+            title: Text('Login Failed'),
+            content: Text('Please enter email and password.'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Text('OK'),
+                child: Text('OK'),
               ),
             ],
           );
@@ -68,14 +60,14 @@ class _StartScreenState extends State<StartScreen> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Login Failed'),
-            content: const Text('Please enter a valid KKU email.'),
+            title: Text('Login Failed'),
+            content: Text('Please enter a valid KKU email.'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Text('OK'),
+                child: Text('OK'),
               ),
             ],
           );
@@ -92,59 +84,20 @@ class _StartScreenState extends State<StartScreen> {
     );
   }
 
-  void signInWithGoogle(BuildContext context) async {
-    try {
-      if (kIsWeb) {
-        GoogleAuthProvider googleProvider = GoogleAuthProvider();
-
-        googleProvider
-            .addScope('https://www.googleapis.com/auth/contacts.readonly');
-
-        await FirebaseAuth.instance.signInWithPopup(googleProvider);
-      } else {
-        GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
-
-        final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-
-        if (googleUser != null) {
-          final GoogleSignInAuthentication googleAuth =
-              await googleUser.authentication;
-
-          final credential = GoogleAuthProvider.credential(
-            accessToken: googleAuth.accessToken,
-            idToken: googleAuth.idToken,
-          );
-
-          await FirebaseAuth.instance.signInWithCredential(credential);
-        }
-      }
-    } on FirebaseAuthException catch (e) {
-      showSnackBar(context, e.message!);
-    }
-  }
-
-  void showSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Gear Studio Info Tracker',
           style: TextStyle(
             color: Colors.white,
           ),
         ),
-        backgroundColor: const Color(0xFF9D2C13),
+        backgroundColor: Color(0xFF9D2C13),
       ),
       body: Container(
-        padding: const EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -153,14 +106,14 @@ class _StartScreenState extends State<StartScreen> {
               height: 150,
               width: 150,
             ),
-            const SizedBox(height: 20.0),
+            SizedBox(height: 20.0),
             TextField(
               controller: _usernameController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Email',
               ),
             ),
-            const SizedBox(height: 20.0),
+            SizedBox(height: 20.0),
             TextField(
               controller: _passwordController,
               decoration: InputDecoration(
@@ -178,55 +131,19 @@ class _StartScreenState extends State<StartScreen> {
               ),
               obscureText: _obscureText,
             ),
-            const SizedBox(height: 10.0),
+            SizedBox(height: 10.0),
             ElevatedButton(
-<<<<<<< Updated upstream
               onPressed: () {
                 _login(context);
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF9D2C13),
-=======
-              onPressed: _login,
-              style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF9D2C13),
->>>>>>> Stashed changes
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              child: const Text(
+              child: Text(
                 'Login',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              '------------------------------ OR ------------------------------',
-              style: TextStyle(color: Colors.black),
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton.icon(
-<<<<<<< Updated upstream
-              onPressed: () {
-                signInWithGoogle(context);
-              },
-=======
-              onPressed: _login,
->>>>>>> Stashed changes
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF9D2C13),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                minimumSize: const Size(120, 40),
-              ),
-              icon: const Icon(
-                Icons.email,
-                color: Colors.white,
-              ),
-              label: const Text(
-                'KKU EMAIL',
                 style: TextStyle(color: Colors.white),
               ),
             ),
