@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'welcomescreen.dart';
 import 'information_rooms.dart';
 import 'information.dart';
 import 'dart:async';
@@ -140,7 +141,7 @@ class _RoomScheduleState extends State<RoomSchedule> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => InformationPage(username: widget.username),
+        builder: (context) => WelcomeScreen(username: widget.username),
       ),
     );
   }
@@ -301,16 +302,16 @@ class _RoomScheduleState extends State<RoomSchedule> {
             FloatingActionButton(
               heroTag: 'home_button', // Unique tag
               onPressed: () {
-                //
+                _navigateToWelcomeScreen(context);
               },
               backgroundColor: Colors.transparent,
               elevation: 0,
               child: const Icon(Icons.home, color: Colors.white),
             ),
             FloatingActionButton(
-              heroTag: 'home_button_info', // Unique tag
+              heroTag: 'calendar button', // Unique tag
               onPressed: () {
-                _navigateToWelcomeScreen(context);
+                //
               },
               backgroundColor: Colors.transparent,
               elevation: 0,

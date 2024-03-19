@@ -47,14 +47,14 @@ class _StartScreenState extends State<StartScreen> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Login Failed'),
-            content: Text('Please enter email and password.'),
+            title: const Text('Login Failed'),
+            content: const Text('Please enter email and password.'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -68,14 +68,14 @@ class _StartScreenState extends State<StartScreen> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Login Failed'),
-            content: Text('Please enter a valid KKU email.'),
+            title: const Text('Login Failed'),
+            content: const Text('Please enter a valid KKU email.'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -215,17 +215,17 @@ class _StartScreenState extends State<StartScreen> {
               onPressed: _login,
 >>>>>>> Stashed changes
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF9D2C13),
+                backgroundColor: const Color(0xFF9D2C13),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                minimumSize: Size(120, 40),
+                minimumSize: const Size(120, 40),
               ),
-              icon: Icon(
+              icon: const Icon(
                 Icons.email,
                 color: Colors.white,
               ),
-              label: Text(
+              label: const Text(
                 'KKU EMAIL',
                 style: TextStyle(color: Colors.white),
               ),

@@ -18,20 +18,22 @@ class InformationRooms extends StatelessWidget {
         ),
         backgroundColor: const Color(0xFF9D2C13),
       ),
-      body: const Padding(
-        padding: EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SectionTitle('Rooms Information'),
-            SizedBox(height: 20.0),
-            Text(
-              'You can explore information about the rooms in Gear Studio here.',
-              style: TextStyle(fontSize: 18.0),
-            ),
-            SizedBox(height: 20.0),
-            MainClassroom(),
-          ],
+      body: const SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SectionTitle('Rooms Information'),
+              SizedBox(height: 20.0),
+              Text(
+                'You can explore information about the rooms in Gear Studio here.',
+                style: TextStyle(fontSize: 18.0),
+              ),
+              SizedBox(height: 20.0),
+              MainClassroom(),
+            ],
+          ),
         ),
       ),
       floatingActionButton: Container(
