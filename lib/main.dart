@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'welcomescreen.dart';
 
 void main() {
+<<<<<<< HEAD
   runApp(const MyApp());
+=======
+  runApp(MyApp());
+>>>>>>> 774391e18ec1c05fe3d8e9529e239dfd78abfc53
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,14 +18,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const StartScreen(),
+      home: StartScreen(),
     );
   }
 }
 
 class StartScreen extends StatefulWidget {
-  const StartScreen({Key? key}) : super(key: key);
-
   @override
   _StartScreenState createState() => _StartScreenState();
 }
@@ -43,14 +43,14 @@ class _StartScreenState extends State<StartScreen> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Login Failed'),
-            content: const Text('Please enter email and password.'),
+            title: Text('Login Failed'),
+            content: Text('Please enter email and password.'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Text('OK'),
+                child: Text('OK'),
               ),
             ],
           );
@@ -64,14 +64,14 @@ class _StartScreenState extends State<StartScreen> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Login Failed'),
-            content: const Text('Please enter a valid KKU email.'),
+            title: Text('Login Failed'),
+            content: Text('Please enter a valid KKU email.'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Text('OK'),
+                child: Text('OK'),
               ),
             ],
           );
@@ -92,16 +92,16 @@ class _StartScreenState extends State<StartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Gear Studio Info Tracker',
           style: TextStyle(
             color: Colors.white,
           ),
         ),
-        backgroundColor: const Color(0xFF9D2C13),
+        backgroundColor: Color(0xFF9D2C13),
       ),
       body: Container(
-        padding: const EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -110,14 +110,14 @@ class _StartScreenState extends State<StartScreen> {
               height: 150,
               width: 150,
             ),
-            const SizedBox(height: 20.0),
+            SizedBox(height: 20.0),
             TextField(
               controller: _usernameController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Email',
               ),
             ),
-            const SizedBox(height: 20.0),
+            SizedBox(height: 20.0),
             TextField(
               controller: _passwordController,
               decoration: InputDecoration(
@@ -135,18 +135,18 @@ class _StartScreenState extends State<StartScreen> {
               ),
               obscureText: _obscureText,
             ),
-            const SizedBox(height: 10.0),
+            SizedBox(height: 10.0),
             ElevatedButton(
               onPressed: () {
                 _login(context);
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF9D2C13),
+                backgroundColor: Color(0xFF9D2C13),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              child: const Text(
+              child: Text(
                 'Login',
                 style: TextStyle(color: Colors.white),
               ),
