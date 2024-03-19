@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'welcomescreen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-//import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 
-void main() async {
+void main() {
   runApp(const MyApp());
 }
 
@@ -32,12 +29,12 @@ class StartScreen extends StatefulWidget {
 }
 
 class _StartScreenState extends State<StartScreen> {
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   bool _obscureText = true;
 
-  void _login() async {
+  void _login(BuildContext context) async {
     String email = _usernameController.text.trim();
     String password = _passwordController.text.trim();
 
@@ -141,7 +138,7 @@ class _StartScreenState extends State<StartScreen> {
             const SizedBox(height: 10.0),
             ElevatedButton(
               onPressed: () {
-                _login();
+                _login(context);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF9D2C13),
@@ -154,49 +151,9 @@ class _StartScreenState extends State<StartScreen> {
                 style: TextStyle(color: Colors.white),
               ),
             ),
-            const SizedBox(height: 20),
-            const Text(
-              '------------------------------ OR ------------------------------',
-              style: TextStyle(color: Colors.black),
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton.icon(
-              onPressed: () {
-                signInWithGoogle();
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF9D2C13),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                minimumSize: const Size(120, 40),
-              ),
-              icon: const Icon(
-                Icons.email,
-                color: Colors.white,
-              ),
-              label: const Text(
-                'KKU EMAIL',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
           ],
         ),
       ),
     );
-  }
-
-  void signInWithGoogle() async {
-    GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
-
-    AuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-
-    UserCredential userCredential =
-        await FirebaseAuth.instance.signInWithCredential(credential);
-    print(userCredential.user?.displayName);
   }
 }

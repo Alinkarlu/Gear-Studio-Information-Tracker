@@ -20,7 +20,7 @@ class InformationRooms extends StatelessWidget {
       ),
       body: const SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(20.0),
+          padding: EdgeInsets.all(10.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -30,7 +30,6 @@ class InformationRooms extends StatelessWidget {
                 'You can explore information about the rooms in Gear Studio here.',
                 style: TextStyle(fontSize: 18.0),
               ),
-              SizedBox(height: 20.0),
               MainClassroom(),
             ],
           ),
